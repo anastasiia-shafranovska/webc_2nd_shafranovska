@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Drawing App</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <main class="appcontainer">
+
+        <aside class="toolbarLeft">
+            <button id="tlDraw" class="tlbtn active" title="Draw">D</button>
+            <button id="tlErase" class="tlbtn" title="Eraser">E</button>
+            <button id="tlStar" class="tlbtn" title="Star Stamp">★</button>
+            <button id="tlUndo" class="tlbtn" title="Undo">↺</button>
+            <button id="tlClear" class="tlbtn" title="Clear">C</button>
+        </aside>
+
+        
+        <section class="workspace">
+            <header class="toolbarTop">
+                <label class="crtlgroup">
+                    <span>Size:</span>
+                    <input type="range" id="brush-size" min="1" max="50" value="5" />
+                    <span id="size-value">5px</span>
+                </label>
+
+                <label class="crtlgroup">
+                    <span>Color:</span>
+                    <input type="color" id="brush-color" value="#000000" />
+                </label>
+            </header>
+
+            <div class="canvas-wrapper">
+                <canvas id="DrawingCanvas" width="700" height="500"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
