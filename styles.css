@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.appcontainer {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+    display: flex;
+    gap: 22px;
+}
+
+.toolbarLeft {
+    padding-top: 68px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.tlbtn {
+    background-color: #f9fafb;
+    color: #1f2937;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.tlbtn:hover {
+    background-color: #e5e7eb;
+}
+
+.tlbtn.active {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #1d4ed8;
+}
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.toolbarTop {
+    background-color: #f9fafb;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    height: 48px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.crtlgroup {
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#brush-size {
+    cursor: pointer;
+}
+
+#brush-color {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.canvas-wrapper {
+    border: 2px solid #1f2937;
+    border-radius: 4px;
+    line-height: 0;
+}
+
+#DrawingCanvas {
+    background-color: #ffffff;
+    display: block;
+    cursor: crosshair;
+}
