@@ -1,8 +1,22 @@
 const board = document.getElementById('DrawingCanvas');
 const brush = board.getContext('2d');
 
-let paint = false;
+const sizeInput = document.getElementById('brush-size');
+const sizeLabel = document.getElementById('size-value');
+const colorInput = document.getElementById('brush-color');
 
+let paint = false;
+let lineThickness = Number(sizeInput.value);
+let lineColor = colorInput.value;
+
+sizeInput.addEventListener('input', () => {
+    lineThickness = Number(sizeInput.value);
+    sizeLabel.textContent = `${lineThickness}px`;
+});
+
+colorInput.addEventListener('input', () => {
+    lineColor = colorInput.value;
+});
 
 function findcursor(event) {
     const rect = board.getBoundingClientRect();
@@ -12,7 +26,6 @@ function findcursor(event) {
     };
 }
 
-
 board.addEventListener('mousedown', (event) => {
     if (event.button !== 0) return;
 
@@ -21,15 +34,13 @@ board.addEventListener('mousedown', (event) => {
 
     brush.beginPath();
     brush.moveTo(pos.x, pos.y);
-    brush.lineWidth = 5;
+    brush.lineWidth = lineThickness;
     brush.lineCap = 'round';
-    brush.strokeStyle ='#000000';
-
+    brush.strokeStyle = lineColor;
 
     brush.lineTo(pos.x, pos.y);
     brush.stroke();
 });
-
 
 board.addEventListener('mousemove', (event) => {
     if (!paint) return;
@@ -38,7 +49,6 @@ board.addEventListener('mousemove', (event) => {
     brush.lineTo(pos.x, pos.y);
     brush.stroke();
 });
-
 
 function stopdraw() {
     if (!paint) return;
