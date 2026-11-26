@@ -10,6 +10,46 @@ let paint = false;
 let lineThickness = Number(sizeInput.value);
 let lineColor = colorInput.value;
 let activeTool = 'D';
+const history = [];
+
+function saver() {
+    history.push(brush.getImageData(0, 0, board.width, board.height));
+}
+
+function undoLastAction() {
+    if (history.length === 0) return;
+    const laststep = history.pop();
+    brush.putImageData(laststep, 0, 0);
+}
+
+function drawStar(cx, cy, radius) {
+    const points = 5;
+    const biggeerr = radius * 2.5;
+    const smallerr = biggeerr * 0.45;
+    let rotation = (Math.PI / 2) * 3;
+    const step = Math.PI / points;
+
+    brush.beginPath();
+    brush.moveTo(cx, cy - biggeerr);
+
+    for (let i = 0; i < points; i++) {
+        brush.lineTo(
+            cx + Math.cos(rotation) * biggeerr,
+            cy + Math.sin(rotation) * biggeerr
+        );
+        rotation += step;
+
+        brush.lineTo(
+            cx + Math.cos(rotation) * smallerr,
+            cy + Math.sin(rotation) * smallerr
+        );
+        rotation += step;
+    }
+
+    brush.closePath();
+    brush.fillStyle = lineColor;
+    brush.fill();
+}
 
 function setActiveButton(targetBtn) {
     toolButtons.forEach((btn) => btn.classList.remove('active'));
@@ -26,8 +66,14 @@ toolButtons.forEach((btn) => {
         } else if (label === 'E') {
             activeTool = 'E';
             setActiveButton(btn);
+        } else if (label === '★') {
+            activeTool = '★';
+            setActiveButton(btn);
         } else if (label === 'C') {
+            saver();
             brush.clearRect(0, 0, board.width, board.height);
+        } else {
+            undoLastAction();
         }
     });
 });
@@ -52,9 +98,15 @@ function findcursor(event) {
 board.addEventListener('mousedown', (event) => {
     if (event.button !== 0) return;
 
-    paint = true;
     const pos = findcursor(event);
+    saver();
 
+    if (activeTool === '★') {
+        drawStar(pos.x, pos.y, lineThickness);
+        return;
+    }
+
+    paint = true;
     brush.beginPath();
     brush.moveTo(pos.x, pos.y);
     brush.lineWidth = lineThickness;
@@ -65,7 +117,7 @@ board.addEventListener('mousedown', (event) => {
     brush.stroke();
 });
 
-board.addEventListener('mousemove', (event) => {
+window.addEventListener('mousemove', (event) => {
     if (!paint) return;
 
     const pos = findcursor(event);
@@ -79,5 +131,4 @@ function stopdraw() {
     brush.closePath();
 }
 
-board.addEventListener('mouseup', stopdraw);
-board.addEventListener('mouseleave', stopdraw);
+window.addEventListener('mouseup', stopdraw);
