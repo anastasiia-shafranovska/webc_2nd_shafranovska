@@ -4,10 +4,33 @@ const brush = board.getContext('2d');
 const sizeInput = document.getElementById('brush-size');
 const sizeLabel = document.getElementById('size-value');
 const colorInput = document.getElementById('brush-color');
+const toolButtons = document.querySelectorAll('.tlbtn');
 
 let paint = false;
 let lineThickness = Number(sizeInput.value);
 let lineColor = colorInput.value;
+let activeTool = 'D';
+
+function setActiveButton(targetBtn) {
+    toolButtons.forEach((btn) => btn.classList.remove('active'));
+    targetBtn.classList.add('active');
+}
+
+toolButtons.forEach((btn) => {
+    const label = btn.textContent.trim();
+
+    btn.addEventListener('click', () => {
+        if (label === 'D') {
+            activeTool = 'D';
+            setActiveButton(btn);
+        } else if (label === 'E') {
+            activeTool = 'E';
+            setActiveButton(btn);
+        } else if (label === 'C') {
+            brush.clearRect(0, 0, board.width, board.height);
+        }
+    });
+});
 
 sizeInput.addEventListener('input', () => {
     lineThickness = Number(sizeInput.value);
@@ -36,7 +59,7 @@ board.addEventListener('mousedown', (event) => {
     brush.moveTo(pos.x, pos.y);
     brush.lineWidth = lineThickness;
     brush.lineCap = 'round';
-    brush.strokeStyle = lineColor;
+    brush.strokeStyle = activeTool === 'E' ? '#ffffff' : lineColor;
 
     brush.lineTo(pos.x, pos.y);
     brush.stroke();
